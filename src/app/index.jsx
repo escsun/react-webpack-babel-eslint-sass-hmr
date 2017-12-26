@@ -1,14 +1,10 @@
-import "core-js/es6/map";
-import "core-js/es6/set";
+import "./polyfills";
 
-import * as React from "react";
-import * as ReactDOM from "react-dom";
-// Import hot loader
+import React from "react";
+import ReactDOM from "react-dom";
 import {AppContainer} from "react-hot-loader";
-// Import redux and router-redux
 import { Provider } from "react-redux";
 import { ConnectedRouter } from "react-router-redux";
-// import history and store
 import createHistory from "history/createBrowserHistory";
 import configureStore from "./store/configureStore";
 
@@ -16,11 +12,14 @@ import "./index.scss";
 
 import App from "./components/App";
 
+const history = createHistory();
+const store = configureStore(history);
+
 const render = (Component) => {
     ReactDOM.render(
         <AppContainer>
-            <Provider store={configureStore()}>
-                <ConnectedRouter history={createHistory()}>
+            <Provider store={store}>
+                <ConnectedRouter history={history}>
                     <Component/>
                 </ConnectedRouter>
             </Provider>
